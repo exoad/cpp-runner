@@ -104,7 +104,7 @@ exports.askRun = function (envData, code, fn) {
                 console.log(
                   "Info: ".green +
                     filename +
-                    ".cpp contained an error while compiling"
+                    ".cpp failed to execute"
                 );
               }
               var out = { error: stderr };
@@ -127,7 +127,7 @@ exports.askRun = function (envData, code, fn) {
                       console.log(
                         "Info: ".green +
                           filename +
-                          ".cpp contained an error while executing"
+                          ".cpp failed to execute"
                       );
                     }
                     var out = { error: stderr };
@@ -173,7 +173,7 @@ exports.askRunInput = function (envData, code, input, fn) {
                 console.log(
                   "Info: ".green +
                     filename +
-                    ".cpp contained an error while compiling"
+                    ".cpp failed to execute"
                 );
               }
               var out = { error: stderr };
@@ -215,7 +215,7 @@ exports.askRunInput = function (envData, code, input, fn) {
                           console.log(
                             "Info: ".green +
                               filename +
-                              ".cpp contained an error while executing"
+                              ".cpp failed to execute"
                           );
                         }
                         var out = { error: stderr };
@@ -281,7 +281,7 @@ exports.askRunInput = function (envData, code, input, fn) {
                 console.log(
                   "Info: ".green +
                     filename +
-                    ".cpp contained an error while compiling"
+                    ".cpp failed to execute"
                 );
               }
               var out = { error: stderr };
@@ -311,7 +311,7 @@ exports.askRunInput = function (envData, code, input, fn) {
                       ) {
                         var out = {
                           error:
-                            "Error: stdout maxBuffer exceeded. You might have initialized an infinite loop.",
+                            "Error: stdout maxBuffer exceeded.",
                         };
                         fn(out);
                       } else {
@@ -319,7 +319,7 @@ exports.askRunInput = function (envData, code, input, fn) {
                           console.log(
                             "Info: ".green +
                               filename +
-                              ".cpp contained an error while executing"
+                              ".cpp failed to execute"
                           );
                         }
                         var out = { output: stderr };
@@ -330,7 +330,7 @@ exports.askRunInput = function (envData, code, input, fn) {
                         console.log(
                           "Info: ".green +
                             filename +
-                            ".cpp successfully compiled and executed !"
+                            ".cpp is running"
                         );
                       }
                       var out = { output: stdout };
