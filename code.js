@@ -5,16 +5,14 @@ var colors = require("colors");
 
 exports.stats = false;
 
-exports.compileCPP = function (envData, code, fn) {
+exports.askRun = function (envData, code, fn) {
   var filename = cuid.slug();
   path = "./temp/";
 
-	var useros = envData.OS;
-	var fileEnd;
-	if(envData.OS == "windows")
-		fileEnd = ".exe";
-	else 
-		fileEnd = ".out"; 
+  var useros = envData.OS;
+  var fileEnd;
+  if (envData.OS == "windows") fileEnd = ".exe";
+  else fileEnd = ".out";
 
   fs.writeFile(path + filename + ".cpp", code, function (err) {
     if (exports.stats) {
@@ -28,9 +26,7 @@ exports.compileCPP = function (envData, code, fn) {
             if (error) {
               if (exports.stats) {
                 console.log(
-                  "Info: ".green +
-                    filename +
-                    ".cpp failed to compile"
+                  "Info: ".green + filename + ".cpp failed to compile"
                 );
               }
               var out = { error: stderr };
@@ -46,16 +42,13 @@ exports.compileCPP = function (envData, code, fn) {
                       .indexOf("Error: stdout maxBuffer exceeded.") != -1
                   ) {
                     var out = {
-                      error:
-                        "Error: stdout maxBuffer exceeded.",
+                      error: "Error: stdout maxBuffer exceeded.",
                     };
                     fn(out);
                   } else {
                     if (exports.stats) {
                       console.log(
-                        "Info: ".green +
-                          filename +
-                          ".cpp failed to execute"
+                        "Info: ".green + filename + ".cpp failed to execute"
                       );
                     }
 
@@ -64,12 +57,10 @@ exports.compileCPP = function (envData, code, fn) {
                   }
                 } else {
                   if (progNotFinished) {
-                    progNotFinished = false; 
+                    progNotFinished = false;
                     if (exports.stats) {
                       console.log(
-                        "Info: ".green +
-                          filename +
-                          ".cpp is running"
+                        "Info: ".green + filename + ".cpp is running"
                       );
                     }
                     var out = { output: stdout };
@@ -83,12 +74,13 @@ exports.compileCPP = function (envData, code, fn) {
                     "taskkill /im " + filename + fileEnd + " /f > nul",
                     function (error, stdout, stderr) {
                       if (progNotFinished) {
-                        progNotFinished = false; 
+                        progNotFinished = false;
                         if (exports.stats) {
                           console.log(
                             "Info: ".green +
                               filename +
-                              fileEnd + " was killed after " +
+                              fileEnd +
+                              " was killed after " +
                               envData.options.timeout +
                               "ms"
                           );
@@ -143,11 +135,7 @@ exports.compileCPP = function (envData, code, fn) {
                   }
                 } else {
                   if (exports.stats) {
-                    console.log(
-                      "Info: ".green +
-                        filename +
-                        ".cpp is running"
-                    );
+                    console.log("Info: ".green + filename + ".cpp is running");
                   }
                   var out = { output: stdout };
                   fn(out);
@@ -159,19 +147,17 @@ exports.compileCPP = function (envData, code, fn) {
           console.log("ERROR: ".red + "unrecognized execution command ");
         }
       }
-    } 
+    }
   });
 };
 
-exports.compileCPPWithInput = function (envData, code, input, fn) {
+exports.askRunInput = function (envData, code, input, fn) {
   var filename = cuid.slug();
   path = "./temp/";
 
   var fileE;
-	if(envData.OS == "windows")
-		fileE = ".exe";
-	else 
-		fileE = ".out";
+  if (envData.OS == "windows") fileE = ".exe";
+  else fileE = ".out";
   fs.writeFile(path + filename + ".cpp", code, function (err) {
     if (exports.stats) {
       if (err) console.log("ERROR: ".red + err);
@@ -207,10 +193,9 @@ exports.compileCPPWithInput = function (envData, code, input, fn) {
                 });
                 var progNotFinished = true;
                 var tempcommand;
-                if(envData.OS == "windows")
+                if (envData.OS == "windows")
                   tempcommand = "cd temp & " + filename;
-                else 
-                  tempcommand = "cd temp && ./" + filename;
+                else tempcommand = "cd temp && ./" + filename;
 
                 exec(
                   tempcommand + "<" + inputfile,
@@ -222,8 +207,7 @@ exports.compileCPPWithInput = function (envData, code, input, fn) {
                           .indexOf("Error: stdout maxBuffer exceeded.") != -1
                       ) {
                         var out = {
-                          error:
-                            "Error: stdout maxBuffer exceeded.",
+                          error: "Error: stdout maxBuffer exceeded.",
                         };
                         fn(out);
                       } else {
@@ -242,9 +226,7 @@ exports.compileCPPWithInput = function (envData, code, input, fn) {
                         progNotFinished = false;
                         if (exports.stats) {
                           console.log(
-                            "Info: ".green +
-                              filename +
-                              ".cpp is running"
+                            "Info: ".green + filename + ".cpp is running"
                           );
                         }
                         var out = { output: stdout };
@@ -264,7 +246,8 @@ exports.compileCPPWithInput = function (envData, code, input, fn) {
                             console.log(
                               "Info: ".green +
                                 filename +
-                                fileE + " was killed after " +
+                                fileE +
+                                " was killed after " +
                                 envData.options.timeout +
                                 "ms"
                             );
@@ -318,7 +301,7 @@ exports.compileCPPWithInput = function (envData, code, input, fn) {
                 });
 
                 exec(
-                  path + filename + fileE+ " < " + path + inputfile,
+                  path + filename + fileE + " < " + path + inputfile,
                   function (error, stdout, stderr) {
                     if (error) {
                       if (
@@ -355,8 +338,7 @@ exports.compileCPPWithInput = function (envData, code, input, fn) {
                     }
                   }
                 );
-              }
-              else {
+              } else {
                 if (exports.stats) {
                   console.log(
                     "Info: ".green + "Input missing for " + filename + ".cpp"
@@ -370,7 +352,7 @@ exports.compileCPPWithInput = function (envData, code, input, fn) {
         } else {
           console.log("ERROR: ".red + "unrecognized command");
         }
-      } 
-    } 
-  }); 
-}; 
+      }
+    }
+  });
+};
