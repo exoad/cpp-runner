@@ -1,7 +1,7 @@
 {
   "name": "cpp-runner",
   "version": "1.0.0",
-  "description": "Run C++ Code with Coverage",
+  "description": "C++ Code Runner",
   "main": "main.js",
   "dependencies": {},
   "devDependencies": {},
@@ -10,16 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/exoad/compilex.git"
+    "url": "git+https://github.com/exoad/cpp-runner.git"
   },
-  "keywords": [
-    "c++",
-    "runner"
-  ],
   "author": "exoad",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/exoad/compilex/issues"
+    "url": "https://github.com/exoad/cpp-runner/issues"
   },
-  "homepage": "https://github.com/exoad/compilex#readme"
+  "homepage": "https://github.com/exoad/cpp-runner#readme"
 }
