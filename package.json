@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "C++ Code Runner",
   "main": "main.js",
-  "dependencies": {},
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cuid": "^2.1.8",
+    "fs": "0.0.1-security"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

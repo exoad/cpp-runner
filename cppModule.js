@@ -206,7 +206,11 @@ exports.compileCPPWithInput = function (envData, code, input, fn) {
                   }
                 });
                 var progNotFinished = true;
-                var tempcommand = "cd temp & " + filename;
+                var tempcommand;
+                if(envData.OS == "windows")
+                  tempcommand = "cd temp & " + filename;
+                else 
+                  tempcommand = "cd temp && ./" + filename;
 
                 exec(
                   tempcommand + "<" + inputfile,
@@ -250,13 +254,12 @@ exports.compileCPPWithInput = function (envData, code, input, fn) {
                   }
                 );
                 if (envData.options.timeout) {
-                  // kill the programme after envData.options.timeout ms
                   setTimeout(function () {
                     exec(
                       "taskkill /im " + filename + fileE + "/f > nul",
                       function (error, stdout, stderr) {
                         if (progNotFinished) {
-                          progNotFinished = false; // programme finished
+                          progNotFinished = false;
                           if (exports.stats) {
                             console.log(
                               "Info: ".green +
